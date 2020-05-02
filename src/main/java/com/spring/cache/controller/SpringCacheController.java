@@ -107,4 +107,17 @@ public class SpringCacheController {
         map.put("result",true);
         return map;
     }
+     /**
+     * 批量删除redis缓存
+     */
+    @RequestMapping("/batch/clear/{i}")
+    public void batchClearRedis(@PathVariable(name = "i") Integer i){
+        String pattern = "";
+        if(i % 2 == 0){
+            pattern = "name:xiaoxiao:*";
+        }else if(i % 2 == 1){
+            pattern = "name:qiqi:*";
+        }
+        redisUtil.removePattern(pattern);
+    }
 }
