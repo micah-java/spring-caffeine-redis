@@ -32,12 +32,17 @@ public class SpringCacheController {
 
     @GetMapping("/query")
     public List<User> query(){
-        List<User> list = userService.query();
+        List<User> list = null;//userService.query();
+
+        for(int i = 0 ; i < 3; i ++){
+            redisUtil.set("test" + i, i,i * 2l + 1);
+        }
+
         // 加入缓存
-        list.forEach( e -> {
-            caffeineCache.put(e.getId(),e);
-            redisUtil.set(String.valueOf(e.getId()),e);
-        });
+//        list.forEach( e -> {
+//            caffeineCache.put(e.getId(),e);
+//            redisUtil.set(String.valueOf(e.getId()),e);
+//        });
         return list;
     }
 

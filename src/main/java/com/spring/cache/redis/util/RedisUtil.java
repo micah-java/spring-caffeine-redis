@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.StreamSupport;
 
@@ -35,6 +36,20 @@ public class RedisUtil {
         boolean res = false;
         try{
             redisTemplate.opsForValue().set(key,object);
+            res = true;
+        }catch (Exception e){
+            logger.error("redis set error:{}",e.getMessage(),e);
+        }
+        return res;
+    }
+
+    /**
+     * 写入缓存
+     */
+    public boolean set(String key,Object object,Long expireTime){
+        boolean res = false;
+        try{
+            redisTemplate.opsForValue().set(key,object,expireTime, TimeUnit.SECONDS);
             res = true;
         }catch (Exception e){
             logger.error("redis set error:{}",e.getMessage(),e);

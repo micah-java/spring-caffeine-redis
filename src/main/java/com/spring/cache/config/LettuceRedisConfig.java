@@ -56,6 +56,9 @@ public class LettuceRedisConfig {
         return cacheManager;
     }
     /*******************************************************************************************************************/
+    /**
+     * redis监听
+     */
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter){
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
